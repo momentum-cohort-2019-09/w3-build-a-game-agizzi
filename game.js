@@ -69,7 +69,7 @@ class Player {
 
 	update() {
 		if (this.keyboard.isDown(Keyboarder.KEYS.RIGHT)) {
-			this.position.x += 64;
+			this.position.x += 1;
 		}
 		// console.log(this.position.x);
 	}
@@ -108,7 +108,7 @@ class Keyboarder {
 	}
 }
 
-Keyboarder.KEYS = { LEFT: 37, RIGHT: 39, UP: 38, DOWN: 40, S: 83 };
+Keyboarder.KEYS = { LEFT: 65, RIGHT: 68, UP: 87, DOWN: 83, S: 83 };
 
 const game = new Game('gameCanvas');
 game.play();
