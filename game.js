@@ -140,7 +140,10 @@ class Keyboarder {
 		window.addEventListener(
 			'keydown',
 			function(e) {
+				console.log('keydown')
+				console.log(e.keycode + this.keyState[e.KeyCode])
 				this.keyState[e.keyCode] = true;
+				console.log(e.keycode + this.keyState[e.KeyCode])
 			}.bind(this)
 		);
 
@@ -161,6 +164,7 @@ class Keyboarder {
 
 	on(keyCode, callback) {
 		window.addEventListener('keydown', function(e) {
+			console.log('callback')
 			if (e.keyCode === keyCode) {
 				callback();
 			}
