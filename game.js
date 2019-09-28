@@ -162,7 +162,7 @@ class Keyboarder {
 	}
 }
 
-Keyboarder.KEYS = { LEFT: 65, RIGHT: 68, UP: 87, DOWN: 83 };
+Keyboarder.KEYS = { LEFT: 37, RIGHT: 39, UP: 38, DOWN: 40 };
 
 const game = new Game('gameCanvas');
 game.play();
