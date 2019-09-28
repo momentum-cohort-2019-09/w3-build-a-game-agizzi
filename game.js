@@ -10,7 +10,6 @@ class Game {
 			height: 44
 		};
 
-		// center coordinates
 		let playerStartLocation = {
 			x: 160,
 			y: 296
@@ -73,8 +72,9 @@ class Player {
 		this.size = size;
 		this.position = position;
 		this.keyboard = new Keyboarder();
+		this.movement = false;
 	}
-	// update(game) {}
+
 	draw(screen) {
 		screen.fillStyle = 'white';
 		screen.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
@@ -82,7 +82,24 @@ class Player {
 
 	update() {
 		if (this.keyboard.isDown(Keyboarder.KEYS.RIGHT)) {
+			this.movement = true;
 			this.position.x += 64;
+
+			if (this.position.x >= 296) {
+				this.position.x = 296;
+			}
+		}
+		if (this.keyboard.isDown(Keyboarder.KEYS.LEFT)) {
+			this.position.x -= 64;
+			if (this.position.x <= 160) {
+				this.position.x = 160;
+			}
+		}
+		if (this.keyboard.isDown(Keyboarder.KEYS.UP)) {
+			this.position.y -= 64;
+			if (this.position.y <= 160) {
+				this.position.y = 160;
+			}
 		}
 		// console.log(this.position.x);
 	}
