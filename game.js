@@ -84,17 +84,14 @@ class Player {
 		if (this.keyboard.isDown(Keyboarder.KEYS.RIGHT)) {
 			this.movement = true;
 			this.position.x += 64;
-			console.log("moved right " + this.position.x)
 
 			if (this.position.x >= 296) {
 				this.position.x = 296;
 			}
 		}
 		if (this.keyboard.isDown(Keyboarder.KEYS.LEFT)) {
-			console.log()
 			this.movement = true;
 			this.position.x -= 64;
-			console.log("moved left " + this.position.x)
 
 			if (this.position.x <= 160) {
 				this.position.x = 160;
@@ -103,7 +100,6 @@ class Player {
 		if (this.keyboard.isDown(Keyboarder.KEYS.UP)) {
 			this.movement = true;
 			this.position.y -= 64;
-			console.log("moved up " + this.position.y)
 
 			if (this.position.y <= 160) {
 				this.position.y = 160;
@@ -112,7 +108,6 @@ class Player {
 		if (this.keyboard.isDown(Keyboarder.KEYS.DOWN)) {
 			this.movement = true;
 			this.position.y += 64;
-			console.log("moved down " + this.position.y)
 
 			if (this.position.y >= 296) {
 				this.position.y = 296;
@@ -146,28 +141,27 @@ class Keyboarder {
 			'keydown',
 			function(e) {
 				this.keyState[e.keyCode] = true;
-				console.log(e.KeyCode + " is down")
 			}.bind(this)
 		);
 
 		window.addEventListener(
 			'keyup',
 			function(e) {
+				console.log('keyup')
+				console.log(e.keycode + this.keyState[e.KeyCode])
 				this.keyState[e.KeyCode] = false;
-				console.log(e.KeyCode + " is up")
+				console.log(e.keycode + this.keyState[e.KeyCode])
 			}.bind(this)
 		);
 	}
 
 	isDown(keyCode) {
-		console.log(this.keyState[keyCode] + keyCode +" is down")
 		return this.keyState[keyCode] === true;
 	}
 
 	on(keyCode, callback) {
 		window.addEventListener('keydown', function(e) {
 			if (e.keyCode === keyCode) {
-				console.log(callback)
 				callback();
 			}
 		});
