@@ -3,7 +3,6 @@ class Game {
 		const canvas = document.getElementById(canvasId);
 		this.screen = canvas.getContext('2d');
 		this.size = { width: canvas.width, height: canvas.height };
-
 		this.bodies = [];
 
 		let playerSize = {
@@ -16,14 +15,22 @@ class Game {
 			x: 160,
 			y: 296
 		};
-		this.addBody(new Player(playerSize, playerStartLocation));
 
-		let tick = () => {
-			this.update();
-			this.draw(this.screen, this.size);
-			requestAnimationFrame(tick);
+		this.player = new Player(playerSize, playerStartLocation);
+		this.addBody(this.player);
+
+		let coinSize = {
+			width: 22,
+			height: 22
 		};
-		tick();
+
+		let coinStartLocation = {
+			x: 224,
+			y: 232
+		};
+
+		this.coin = new Coin(coinSize, coinStartLocation);
+		this.addBody(this.coin);
 	}
 
 	addBody(body) {
@@ -37,6 +44,12 @@ class Game {
 	}
 
 	play() {
+		const tick = () => {
+			this.update();
+			this.draw(this.screen, this.size);
+			requestAnimationFrame(tick);
+		};
+		tick();
 		this.draw();
 	}
 
@@ -61,7 +74,7 @@ class Player {
 		this.position = position;
 		this.keyboard = new Keyboarder();
 	}
-	update(game) {}
+	// update(game) {}
 	draw(screen) {
 		screen.fillStyle = 'white';
 		screen.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
@@ -69,12 +82,23 @@ class Player {
 
 	update() {
 		if (this.keyboard.isDown(Keyboarder.KEYS.RIGHT)) {
-			this.position.x += 1;
+			this.position.x += 64;
 		}
 		// console.log(this.position.x);
 	}
 }
-// }
+
+class Coin {
+	constructor(size, position) {
+		this.size = size;
+		this.position = position;
+	}
+
+	draw(screen) {
+		screen.fillStyle = 'sunny';
+		screen.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
+	}
+}
 
 class Keyboarder {
 	constructor() {
@@ -108,7 +132,7 @@ class Keyboarder {
 	}
 }
 
-Keyboarder.KEYS = { LEFT: 65, RIGHT: 68, UP: 87, DOWN: 83, S: 83 };
+Keyboarder.KEYS = { LEFT: 65, RIGHT: 68, UP: 87, DOWN: 83 };
 
 const game = new Game('gameCanvas');
 game.play();
