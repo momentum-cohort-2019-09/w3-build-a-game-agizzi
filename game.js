@@ -103,6 +103,7 @@ class Player {
 		if (this.keyboard.isDown(Keyboarder.KEYS.LEFT)) {
 			// this.movement = true;
 			this.position.x -= 64;
+
 			if (this.position.x <= 160) {
 				this.position.x = 160;
 			}
@@ -110,6 +111,7 @@ class Player {
 		if (this.keyboard.isDown(Keyboarder.KEYS.UP)) {
 			// this.movement = true;
 			this.position.y -= 64;
+
 			if (this.position.y <= 160) {
 				this.position.y = 160;
 			}
@@ -117,6 +119,7 @@ class Player {
 		if (this.keyboard.isDown(Keyboarder.KEYS.DOWN)) {
 			// this.movement = true;
 			this.position.y += 64;
+
 			if (this.position.y >= 296) {
 				this.position.y = 296;
 			}
@@ -155,7 +158,10 @@ class Keyboarder {
 		window.addEventListener(
 			'keyup',
 			function(e) {
+				console.log('keyup')
+				console.log(e.keycode + this.keyState[e.KeyCode])
 				this.keyState[e.KeyCode] = false;
+				console.log(e.keycode + this.keyState[e.KeyCode])
 			}.bind(this)
 		);
 	}
