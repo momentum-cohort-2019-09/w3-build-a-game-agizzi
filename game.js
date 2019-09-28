@@ -90,17 +90,28 @@ class Player {
 			}
 		}
 		if (this.keyboard.isDown(Keyboarder.KEYS.LEFT)) {
+			this.movement = true;
 			this.position.x -= 64;
 			if (this.position.x <= 160) {
 				this.position.x = 160;
 			}
 		}
 		if (this.keyboard.isDown(Keyboarder.KEYS.UP)) {
+			this.movement = true;
 			this.position.y -= 64;
 			if (this.position.y <= 160) {
 				this.position.y = 160;
 			}
 		}
+		if (this.keyboard.isDown(Keyboarder.KEYS.DOWN)) {
+			this.movement = true;
+			this.position.y += 64;
+			if (this.position.y >= 296) {
+				this.position.y = 296;
+			}
+		}
+
+		this.movement = false;
 		// console.log(this.position.x);
 	}
 }
