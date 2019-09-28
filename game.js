@@ -37,8 +37,18 @@ class Game {
 	}
 
 	update() {
-		for (let body of this.bodies) {
-			body.update();
+		let notCollidingWithAnything = (b1) => {
+			return (
+				this.bodies.filter(function(b2) {
+					return collidingCoin(b1, b2);
+				}).length === 0
+			);
+		};
+
+		this.bodies = this.bodies.filter(notCollidingWithAnything);
+
+		for (let i = 0; i < this.bodies.length; i++) {
+			this.bodies[i].update();
 		}
 	}
 
@@ -72,7 +82,7 @@ class Player {
 		this.size = size;
 		this.position = position;
 		this.keyboard = new Keyboarder();
-		this.movement = false;
+		// this.movement = false;
 	}
 
 	draw(screen) {
@@ -82,36 +92,37 @@ class Player {
 
 	update() {
 		if (this.keyboard.isDown(Keyboarder.KEYS.RIGHT)) {
-			this.movement = true;
+			// this.movement = true;
 			this.position.x += 64;
 
 			if (this.position.x >= 296) {
 				this.position.x = 296;
 			}
+			// this.keyState === false;
 		}
 		if (this.keyboard.isDown(Keyboarder.KEYS.LEFT)) {
-			this.movement = true;
+			// this.movement = true;
 			this.position.x -= 64;
 			if (this.position.x <= 160) {
 				this.position.x = 160;
 			}
 		}
 		if (this.keyboard.isDown(Keyboarder.KEYS.UP)) {
-			this.movement = true;
+			// this.movement = true;
 			this.position.y -= 64;
 			if (this.position.y <= 160) {
 				this.position.y = 160;
 			}
 		}
 		if (this.keyboard.isDown(Keyboarder.KEYS.DOWN)) {
-			this.movement = true;
+			// this.movement = true;
 			this.position.y += 64;
 			if (this.position.y >= 296) {
 				this.position.y = 296;
 			}
 		}
 
-		this.movement = false;
+		// this.movement = false;
 		// console.log(this.position.x);
 	}
 }
@@ -153,6 +164,10 @@ class Keyboarder {
 		return this.keyState[keyCode] === true;
 	}
 
+	// isUp(keyCode) {
+	// 	return this.keyState[keyCode] === false;
+	// }
+
 	on(keyCode, callback) {
 		window.addEventListener('keydown', function(e) {
 			if (e.keyCode === keyCode) {
@@ -163,6 +178,27 @@ class Keyboarder {
 }
 
 Keyboarder.KEYS = { LEFT: 37, RIGHT: 39, UP: 38, DOWN: 40 };
+
+function collidingSweeper(b1, b2) {
+	return !(
+		b1 === b2 ||
+		b1.size.width / 2 < b2.size.width / 2 ||
+		b1.size.height / 2 < b2.size.height / 2 ||
+		b1.size.width / 2 > b2.size.width / 2 ||
+		b1.size.height / 2 > b2.size.height / 2
+	);
+}
+
+function collidingCoin(b1, b2) {
+	console.log(b1, b2);
+	return !(
+		b1 === b2 &&
+		b1.size.width < b2.size.width &&
+		b1.size.height < b2.size.height &&
+		b1.size.width > b2.size.width &&
+		b1.size.height > b2.size.height
+	);
+}
 
 const game = new Game('gameCanvas');
 game.play();
