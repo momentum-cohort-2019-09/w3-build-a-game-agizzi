@@ -25,8 +25,8 @@ class Game {
 		};
 
 		let coinStartLocation = {
-			x: 224,
-			y: 232
+			x: 310,
+			y: 168
 		};
 
 		this.coin = new Coin(coinSize, coinStartLocation);
@@ -95,9 +95,11 @@ class Coin {
 	}
 
 	draw(screen) {
-		screen.fillStyle = 'sunny';
+		screen.fillStyle = 'yellow';
 		screen.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
 	}
+
+	update() {}
 }
 
 class Keyboarder {
