@@ -60,7 +60,6 @@ class Game {
 	play() {
 		const tick = () => {
 			this.update();
-			console.log(this.player.keyboard.keyState)
 			this.draw(this.screen, this.size);
 			requestAnimationFrame(tick);
 		};
@@ -87,7 +86,7 @@ class Player {
 	constructor(size, position) {
 		this.size = size;
 		this.position = position;
-		this.keyboard = new Keyboarder()
+		this.keyboard = new Keyboarder();
 		// this.movement = false;
 	}
 
@@ -97,9 +96,7 @@ class Player {
 	}
 
 	update() {
-		console.log(typeof Keyboarder.KEYS.UP)
 		if (this.keyboard.isDown(Keyboarder.KEYS.RIGHT)) {
-			console.log("right")
 			// this.movement = true;
 			this.position.x += 64;
 
@@ -109,7 +106,6 @@ class Player {
 			// this.keyState === false;
 		}
 		if (this.keyboard.isDown(Keyboarder.KEYS.LEFT)) {
-			console.log("left")
 			// this.movement = true;
 			this.position.x -= 64;
 			if (this.position.x <= 160) {
@@ -117,7 +113,6 @@ class Player {
 			}
 		}
 		if (this.keyboard.isDown(Keyboarder.KEYS.UP)) {
-			console.log("up")
 			// this.movement = true;
 			this.position.y -= 64;
 			if (this.position.y <= 160) {
@@ -125,7 +120,6 @@ class Player {
 			}
 		}
 		if (this.keyboard.isDown(Keyboarder.KEYS.DOWN)) {
-			console.log("down")
 			// this.movement = true;
 			this.position.y += 64;
 			if (this.position.y >= 296) {
@@ -159,39 +153,24 @@ class Keyboarder {
 		window.addEventListener(
 			'keydown',
 			function(e) {
-				console.log('keydown')
-				console.log(this.keyState)
 				this.keyState[e.keyCode] = true;
-				// console.log(e.keyCode)
-				// console.log(this.keyState[e.keyCode])
 			}.bind(this)
 		);
 
 		window.addEventListener(
 			'keyup',
 			function(e) {
-				console.log('keyup')
-				console.log(this.keyState)
-				console.log(e.keyCode)
 				this.keyState[e.keyCode] = false;
-				// console.log(e.keyCode)
-				console.log(this.keyState)
 			}.bind(this)
 		);
 	}
 
 	isDown(keyCode) {
-		// console.log("isDown " + keyCode)
-		// console.log(this)
-		// console.log(this.keyState[keyCode] === true)
-		// console.log("isDown" + keyCode)
-		// console.log(this.keyState[keyCode] === true)
 		return this.keyState[keyCode] === true;
 	}
 
 	on(keyCode, callback) {
 		window.addEventListener('keydown', function(e) {
-			console.log("callback")
 			if (e.keyCode === keyCode) {
 				callback();
 			}
