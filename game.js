@@ -4,6 +4,7 @@ class Game {
 		this.screen = canvas.getContext('2d');
 		this.size = { width: canvas.width, height: canvas.height };
 		this.bodies = [];
+		this.player = player;
 		// this.coin = coin;
 		// this.player = player;
 
