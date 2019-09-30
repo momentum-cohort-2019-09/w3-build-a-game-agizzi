@@ -4,9 +4,7 @@ class Game {
 		this.screen = canvas.getContext('2d');
 		this.size = { width: canvas.width, height: canvas.height };
 		this.bodies = [];
-		// this.player = player;
-		// this.coin = coin;
-		// this.player = player;
+		this.gameOver = false;
 
 		this.score = 0;
 	}
@@ -21,12 +19,17 @@ class Game {
 		this.addBody(player);
 		let coin = new Coin(this);
 		this.addBody(coin);
+		let enemy = new Enemy(this);
+		this.addBody(enemy);
 
 		const tick = () => {
 			this.update();
 			this.draw(this.screen, this.size);
-			requestAnimationFrame(tick);
+			if (!this.gameOver) {
+				window.requestAnimationFrame(tick);
+			}
 		};
+
 		tick();
 		this.draw();
 	}
@@ -45,7 +48,11 @@ class Game {
 		}
 	}
 
-	update() {}
+	update() {
+		for (let i = 0; i < this.bodies.length; i++) {
+			this.bodies[i].update();
+		}
+	}
 }
 
 class Player {
@@ -120,14 +127,6 @@ class Coin {
 		screen.fillRect(this.position.x, this.position.y, 22, 22);
 	}
 
-	// collision = false;
-
-	// coinCollision() {
-	// 	if (this.coin.position.x - Game.player.position.x <= 22) {
-	// 		collision = true;
-	// 	}
-	// }
-
 	update() {
 		if (
 			Math.abs(this.position.x - this.game.bodies[0].position.x) <= 22 &&
@@ -136,30 +135,56 @@ class Coin {
 			this.position = this.coinSpawn[Math.floor(Math.random() * Math.floor(9))];
 			this.game.score += 1;
 			console.log(this.game.score);
-			document.querySelector('.scoreBox').innerHTML = `Your score is ${this.game.score}!!`;
-			// this.collision = false;
+			document.querySelector('.scoreBox').innerHTML = `Your score is ${this.game.score} !`;
 		}
 		// console.log(this.position.x);
 		// console.log(this.collision);
 	}
 }
 
-function colliding(b1, b2) {
-	return !// b1.safe ||
-	// b2.safe ||
-	(
-		b1 === b2 ||
-		b1.center.x + b1.size.width / 2 < b2.center.x - b2.size.width / 2 ||
-		b1.center.y + b1.size.height / 2 < b2.center.y - b2.size.height / 2 ||
-		b1.center.x - b1.size.width / 2 > b2.center.x + b2.size.width / 2 ||
-		b1.center.y - b1.size.height / 2 > b2.center.y + b2.size.height / 2
-	);
-}
+class Enemy {
+	constructor(game, size, position) {
+		this.game = game;
+		this.size = { x: 22, y: 22 };
+		this.position = { x: 182, y: 0 };
+		this.center = { x: this.position.x / 2, y: this.position.y / 2 };
+		this.velocity = 3;
+		this.enemySpawnX = [ { x: 182, y: 0 }, { x: 246, y: 0 }, { x: 310, y: 0 } ];
+		// this.enemySpawnY = [ { x: 0, y: 182 }, { x: 0, y: 246 }, { x: 0, y: 310 } ];
+	}
+	draw(screen) {
+		screen.fillStyle = '#7EE8FA';
+		screen.fillRect(this.position.x, this.position.y, 22, 22);
+	}
 
-function drawScore() {
-	this.screen.font = '16px Century-Gothic';
-	this.screen.fillStyle = '#7EE8FA';
-	// this.screen.fillText('Score: ' + score);
+	addEnemy() {
+		game.addBody(new Enemy((this.position = this.enemySpawnX[Math.floor(Math.random() * Math.floor(3))])));
+		// game.addBody(new Enemy((this.position = this.enemySpawnY[Math.floor(Math.random() * Math.floor(3))])));
+	}
+
+	update() {
+		// this.position.y += 1;
+		this.position.y += 1;
+
+		if (Math.random() < 0.001) {
+			this.addEnemy();
+			// this.ticksSinceEnemy = 0;
+		}
+		if (
+			Math.abs(this.position.x - game.bodies[0].position.x) <= 22 &&
+			Math.abs(this.position.y - game.bodies[0].position.y) <= 22
+		) {
+			this.game.score = 0;
+			// 	console.log(this.game.score);
+			document.querySelector('.scoreBox').innerHTML = `Your score is ${this.game.score} !`;
+		}
+		// function checkPosition() {
+		// 	if (this.position.x > 500 || this.position.y > 500) {
+		// 		return true;
+		// 	}
+		// }
+		// this.game.bodies = this.game.bodies.filter(checkPosition);
+	}
 }
 
 class Keyboarder {
