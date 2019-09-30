@@ -178,7 +178,7 @@ class Enemy {
 			game.score = 0;
 			console.log('enemy' + this.game.score);
 			console.log(this.game);
-			document.querySelector('.scoreBox').innerHTML = `Your score is ${this.game.score} !`;
+			document.querySelector('.scoreBox').innerHTML = `Your score is 0 !`;
 		}
 		// function checkPosition() {
 		// 	if (this.position.x > 500 || this.position.y > 500) {
