@@ -11,7 +11,7 @@ class Game {
 
 	addBody(body) {
 		this.bodies.push(body);
-		console.log(this.bodies);
+		// console.log(this.bodies);
 	}
 
 	play() {
@@ -134,7 +134,8 @@ class Coin {
 		) {
 			this.position = this.coinSpawn[Math.floor(Math.random() * Math.floor(9))];
 			this.game.score += 1;
-			console.log(this.game.score);
+			console.log('coin' + this.game.score);
+			console.log(this.game);
 			document.querySelector('.scoreBox').innerHTML = `Your score is ${this.game.score} !`;
 		}
 		// console.log(this.position.x);
@@ -174,8 +175,9 @@ class Enemy {
 			Math.abs(this.position.x - game.bodies[0].position.x) <= 22 &&
 			Math.abs(this.position.y - game.bodies[0].position.y) <= 22
 		) {
-			this.game.score = 0;
-			// 	console.log(this.game.score);
+			game.score = 0;
+			console.log('enemy' + this.game.score);
+			console.log(this.game);
 			document.querySelector('.scoreBox').innerHTML = `Your score is ${this.game.score} !`;
 		}
 		// function checkPosition() {
