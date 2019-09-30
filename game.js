@@ -4,11 +4,11 @@ class Game {
 		this.screen = canvas.getContext('2d');
 		this.size = { width: canvas.width, height: canvas.height };
 		this.bodies = [];
-		this.player = player;
+		// this.player = player;
 		// this.coin = coin;
 		// this.player = player;
 
-		// this.score = 0;
+		this.score = 0;
 	}
 
 	addBody(body) {
@@ -97,28 +97,28 @@ class Player {
 
 class Coin {
 	constructor(game, size, position) {
+		this.game = game;
 		this.size = { x: 22, y: 22 };
 		this.position = { x: 307, y: 171 };
 		this.center = { x: this.position.x / 2, y: this.position.y / 2 };
 		this.collision = false;
+		this.coinSpawn = [
+			{ x: 182, y: 182 },
+			{ x: 246, y: 182 },
+			{ x: 310, y: 182 },
+			{ x: 182, y: 246 },
+			{ x: 246, y: 246 },
+			{ x: 310, y: 246 },
+			{ x: 182, y: 310 },
+			{ x: 246, y: 310 },
+			{ x: 310, y: 310 }
+		];
 	}
 
 	draw(screen) {
 		screen.fillStyle = 'yellow';
 		screen.fillRect(this.position.x, this.position.y, 22, 22);
 	}
-
-	coinSpawn = [
-		{ x: 182, y: 182 },
-		{ x: 246, y: 182 },
-		{ x: 310, y: 182 },
-		{ x: 182, y: 246 },
-		{ x: 246, y: 246 },
-		{ x: 310, y: 246 },
-		{ x: 182, y: 310 },
-		{ x: 246, y: 310 },
-		{ x: 310, y: 310 }
-	];
 
 	// collision = false;
 
@@ -129,12 +129,18 @@ class Coin {
 	// }
 
 	update() {
-		Math.floor(Math.random() * Math.floor(9));
-		if (this.coin.position.x - Game.player.position.x <= 22) {
-			collision = true;
+		if (
+			Math.abs(this.position.x - this.game.bodies[0].position.x) <= 22 &&
+			Math.abs(this.position.y - this.game.bodies[0].position.y) <= 22
+		) {
+			this.position = this.coinSpawn[Math.floor(Math.random() * Math.floor(9))];
+			this.game.score += 1;
+			console.log(this.game.score);
+			document.querySelector('.scoreBox').innerHTML = `Your score is ${this.game.score}!!`;
+			// this.collision = false;
 		}
 		// console.log(this.position.x);
-		console.log(collision);
+		// console.log(this.collision);
 	}
 }
 
